@@ -21,7 +21,7 @@ public class EquipajeModel {
     public EquipajeModel() {
     }
 
-    public EquipajeModel(int id, Double altura, Double ancho, int idPasajero, String tipo) {
+    public EquipajeModel(int idEquipaje, Double altura, Double ancho, int idPasajero, String tipo) {
         this.idEquipaje = idEquipaje;
         this.altura = altura;
         this.ancho = ancho;
@@ -32,7 +32,7 @@ public class EquipajeModel {
         return idEquipaje;
     }
 
-    public void setId(int id) {
+    public void setId(int idEquipaje) {
         this.idEquipaje = idEquipaje;
     }
 
