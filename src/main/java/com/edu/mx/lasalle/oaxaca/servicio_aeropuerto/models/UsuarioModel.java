@@ -12,6 +12,8 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
+// EJEMPLO
+
 @Entity
 @Table(name = "usuario")
 public class UsuarioModel {
