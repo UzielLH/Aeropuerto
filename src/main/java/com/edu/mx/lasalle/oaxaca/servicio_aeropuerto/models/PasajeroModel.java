@@ -2,10 +2,16 @@ package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models;
 
 import java.time.LocalDate;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,10 +28,15 @@ public class PasajeroModel implements Persona {
     private Boolean discapacidad;
     private String nacionalidad;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "pasajero_id")
+    private List<EquipajeModel> equipajes;
+
     public PasajeroModel() {
     }
 
-    public PasajeroModel(int id, String nombre, String apellido, String direccion, LocalDate fechaNacimiento, Boolean discapacidad, String nacionalidad) {
+    public PasajeroModel(int id, String nombre, String apellido, String direccion, LocalDate fechaNacimiento,
+            Boolean discapacidad, String nacionalidad) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
