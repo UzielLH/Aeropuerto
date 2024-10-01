@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "pasajero")
-public class PasajeroModel {
+public class PasajeroModel implements Persona {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -21,6 +21,19 @@ public class PasajeroModel {
     private LocalDate fechaNacimiento;
     private Boolean discapacidad;
     private String nacionalidad;
+
+    public PasajeroModel() {
+    }
+
+    public PasajeroModel(int id, String nombre, String apellido, String direccion, LocalDate fechaNacimiento, Boolean discapacidad, String nacionalidad) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+        this.fechaNacimiento = fechaNacimiento;
+        this.discapacidad = discapacidad;
+        this.nacionalidad = nacionalidad;
+    }
 
     public int getId() {
         return id;
@@ -76,6 +89,36 @@ public class PasajeroModel {
 
     public void setNacionalidad(String nacionalidad) {
         this.nacionalidad = nacionalidad;
+    }
+
+    @Override
+    public void viajar() {
+        System.out.println("Pasajero viajando");
+    }
+
+    @Override
+    public void abordar() {
+        System.out.println("Pasajero abordando");
+    }
+
+    @Override
+    public void dormir() {
+        System.out.println("Pasajero durmiendo");
+    }
+
+    @Override
+    public void checkIn() {
+        System.out.println("Pasajero haciendo Check-In");
+    }
+
+    @Override
+    public void irBano() {
+        System.out.println("Pasajero yendo al bano");
+    }
+
+    @Override
+    public void comer() {
+        System.out.println("Pasajero comiendo");
     }
 
 }
