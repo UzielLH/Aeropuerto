@@ -17,24 +17,16 @@ public class EquipajeModel {
     private Double ancho;
 
     private String tipo;
-    
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private PasajeroModel pasajeroModel;
 
     public EquipajeModel() {
     }
 
-    public EquipajeModel(int id, Double altura, Double ancho, int idPasajero, String tipo, PasajeroModel pasajeroModel) {
+    public EquipajeModel(int id, Double altura, Double ancho, int idPasajero, String tipo) {
         this.idEquipaje = idEquipaje;
         this.altura = altura;
         this.ancho = ancho;
         this.tipo = tipo;
-        this.pasajeroModel = pasajeroModel;
     }
-
-    
 
     public int getId() {
         return idEquipaje;
@@ -60,20 +52,11 @@ public class EquipajeModel {
         this.ancho = ancho;
     }
 
-
     public String getTipo() {
         return tipo;
     }
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
-    }
-
-    public PasajeroModel getPasajeroModel() {
-        return pasajeroModel;
-    }
-
-    public void setPasajeroModel(PasajeroModel pasajeroModel) {
-        this.pasajeroModel = pasajeroModel;
     }
 }
