@@ -4,9 +4,16 @@
  */
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models;
 
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.BoletoModel;
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.TerminalModel;
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.TripulacionModel;
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.VehiculoAereoModel;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -21,6 +28,9 @@ import java.util.List;
 @Entity
 @Table(name = "vuelo")
 public class VueloModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+
     private int idVuelo;
     private String origen;
     private String destino;
