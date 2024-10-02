@@ -6,11 +6,13 @@ package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service;
 
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.CopilotoModel;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author tokay
  */
+@Service
 public interface CopilotoService {
     public void registrarCopiloto(CopilotoModel copilotoModel);
     public List<CopilotoModel> obtenerCopilotos();
