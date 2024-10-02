@@ -26,6 +26,13 @@ public class PilotoModel extends TripulacionModel{
     public PilotoModel() {
     }
 
+    public PilotoModel(String rango, String licencia, String tipoAeronaves, String saludMental) {
+        this.rango = rango;
+        this.licencia = licencia;
+        this.tipoAeronaves = tipoAeronaves;
+        this.saludMental = saludMental;
+    }
+
     public PilotoModel(String rango, String licencia, String tipoAeronaves, String saludMental, int idTripulacion, int antiguedad, String turno, int horasVuelo, String nombre, String apellido, LocalDate fechaNac, String genero) {
         super(idTripulacion, antiguedad, turno, horasVuelo, nombre, apellido, fechaNac, genero);
         this.rango = rango;
