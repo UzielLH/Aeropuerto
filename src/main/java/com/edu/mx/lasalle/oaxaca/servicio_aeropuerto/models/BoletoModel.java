@@ -4,12 +4,19 @@
  */
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
  * @author tokay
  */
+@Entity
+@Table(name = "boleto")
 public class BoletoModel {
     private int idBoleto;
     private String asiento;
@@ -19,6 +26,11 @@ public class BoletoModel {
     
     @OneToOne(mappedBy = "idVuelo")
     private VueloModel vueloModel;
+    
+    @OneToOne
+    @JoinColumn(name = "vuelo_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private VueloModel vuelo;
 
     public BoletoModel(int idBoleto, String asiento, float costo, PasajeroModel pasajeroModel, VueloModel vueloModel) {
         this.idBoleto = idBoleto;
