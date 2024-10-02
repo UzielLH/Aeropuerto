@@ -27,27 +27,28 @@ public class TripulacionServiceImplements implements TripulacionService{
 
     @Override
     public List<TripulacionModel> obtenerTripulacion() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return(List<TripulacionModel>) tripulacionRepository.findAll();
     }
 
     @Override
     public TripulacionModel getTripulacion(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return tripulacionRepository.findById(id);
     }
 
     @Override
     public void actualizarDatosTripulacion(TripulacionModel tripulacionModel, int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        tripulacionModel.setIdTripulacion(id);
+        tripulacionRepository.save(tripulacionModel);
     }
 
     @Override
     public void borrarTripulacion(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        tripulacionRepository.deleteById(id);
     }
 
     @Override
     public void borrarTodosTripulacion() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        tripulacionRepository.deleteAll();
     }
     
 }
