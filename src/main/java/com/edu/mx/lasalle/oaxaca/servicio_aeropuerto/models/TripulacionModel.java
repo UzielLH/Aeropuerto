@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 
@@ -17,11 +19,12 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "tripulacion")
-public class TripulacionModel implements Persona{
+@Inheritance(strategy = InheritanceType.JOINED)
+public class TripulacionModel implements Persona {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int idTripulacion;
-    
+
     private int antiguedad;
     private String turno;
     private int horasVuelo;
@@ -33,7 +36,8 @@ public class TripulacionModel implements Persona{
     public TripulacionModel() {
     }
 
-    public TripulacionModel(int idTripulacion, int antiguedad, String turno, int horasVuelo, String nombre, String apellido, LocalDate fechaNac, String genero) {
+    public TripulacionModel(int idTripulacion, int antiguedad, String turno, int horasVuelo, String nombre,
+            String apellido, LocalDate fechaNac, String genero) {
         this.idTripulacion = idTripulacion;
         this.antiguedad = antiguedad;
         this.turno = turno;
@@ -107,8 +111,7 @@ public class TripulacionModel implements Persona{
     public void setGenero(String genero) {
         this.genero = genero;
     }
-    
-    
+
     @Override
     public void viajar() {
         System.out.println("Tripulacion viajando");
@@ -138,5 +141,5 @@ public class TripulacionModel implements Persona{
     public void comer() {
         System.out.println("Tripulacion comiendo");
     }
-    
+
 }

@@ -4,12 +4,21 @@
  */
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -18,17 +27,19 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "boleto")
 public class BoletoModel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int idBoleto;
     private String asiento;
     private float costo;
-    @OneToOne(mappedBy = "idPasajero")
+
+    @OneToOne(mappedBy = "boletoModel", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @JsonIgnore
     private PasajeroModel pasajeroModel;
-    
-    @OneToOne(mappedBy = "idVuelo")
-    private VueloModel vueloModel;
-    
-    @OneToOne
-    @JoinColumn(name = "vuelo_id")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idVuelo", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private VueloModel vuelo;
 
@@ -37,7 +48,7 @@ public class BoletoModel {
         this.asiento = asiento;
         this.costo = costo;
         this.pasajeroModel = pasajeroModel;
-        this.vueloModel = vueloModel;
+        this.vuelo = vueloModel;
     }
 
     public BoletoModel() {
@@ -76,13 +87,11 @@ public class BoletoModel {
     }
 
     public VueloModel getVueloModel() {
-        return vueloModel;
+        return vuelo;
     }
 
     public void setVueloModel(VueloModel vueloModel) {
-        this.vueloModel = vueloModel;
+        this.vuelo = vueloModel;
     }
-    
-    
-    
+
 }

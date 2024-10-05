@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,6 +28,10 @@ public class PasajeroModel implements Persona {
     private LocalDate fechaNacimiento;
     private Boolean discapacidad;
     private String nacionalidad;
+
+    @OneToOne
+    @JoinColumn(name = "boleto_id", referencedColumnName = "idBoleto")
+    private BoletoModel boletoModel;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "pasajero_id")

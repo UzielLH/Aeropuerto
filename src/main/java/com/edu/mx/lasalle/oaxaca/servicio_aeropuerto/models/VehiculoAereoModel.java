@@ -4,10 +4,15 @@
  */
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 /**
@@ -16,11 +21,12 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "vehiculoAereoModel")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class VehiculoAereoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    
-      int matricula;
+
+    int matricula;
     String model;
     String serie;
     int capacidad;
@@ -31,7 +37,11 @@ public class VehiculoAereoModel {
     String tanque;
     float distancia;
 
-    public VehiculoAereoModel(int matricula, String model, String serie, int capacidad, String color, String estado, String antiguedad, int llantas, String tanque, float distancia) {
+    @OneToOne(mappedBy = "vehiculoAereo", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    private VueloModel vuelo;
+
+    public VehiculoAereoModel(int matricula, String model, String serie, int capacidad, String color, String estado,
+            String antiguedad, int llantas, String tanque, float distancia) {
         this.matricula = matricula;
         this.model = model;
         this.serie = serie;
@@ -86,6 +96,7 @@ public class VehiculoAereoModel {
     public void setDistancia(float distancia) {
         this.distancia = distancia;
     }
+
     public int getMatricula() {
         return matricula;
     }
@@ -97,7 +108,7 @@ public class VehiculoAereoModel {
     public String getSerie() {
         return serie;
     }
-    
+
     public int getCapacidad() {
         return capacidad;
     }
@@ -125,6 +136,5 @@ public class VehiculoAereoModel {
     public float getDistancia() {
         return distancia;
     }
-    
-    
+
 }

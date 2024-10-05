@@ -4,7 +4,6 @@
  */
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models;
 
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -31,29 +30,32 @@ public class VueloModel {
     private int idVuelo;
     private String origen;
     private String destino;
-    
+
     private String duracion;
     private Date horaSalida;
     private Date horaLlegada;
-    
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "vuelo_id")
     private List<TripulacionModel> tripulacion;
-    
-    @OneToOne(mappedBy = "boleto")
-    private BoletoModel boleto;
-    
-    @OneToOne(mappedBy = "terminal")
+
+    @OneToMany(mappedBy = "vuelo", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BoletoModel> boletos;
+
+    @OneToOne
+    @JoinColumn(name = "terminal_id", referencedColumnName = "claveTerminal")
     private TerminalModel terminal;
-    
-    @OneToOne(mappedBy = "vehiculoAereo")
+
+    @OneToOne
+    @JoinColumn(name = "vehiculoAereo_id", referencedColumnName = "matricula")
     private VehiculoAereoModel vehiculoAereo;
 
     public VueloModel() {
     }
 
-    
-    public VueloModel(int idVuelo, String origen, String destino, String duracion, Date horaSalida, Date horaLlegada, List<TripulacionModel> tripulacion, BoletoModel boleto, TerminalModel terminal, VehiculoAereoModel vehiculoAereo) {
+    public VueloModel(int idVuelo, String origen, String destino, String duracion, Date horaSalida, Date horaLlegada,
+            List<TripulacionModel> tripulacion, List<BoletoModel> boleto, TerminalModel terminal,
+            VehiculoAereoModel vehiculoAereo) {
         this.idVuelo = idVuelo;
         this.origen = origen;
         this.destino = destino;
@@ -61,7 +63,7 @@ public class VueloModel {
         this.horaSalida = horaSalida;
         this.horaLlegada = horaLlegada;
         this.tripulacion = tripulacion;
-        this.boleto = boleto;
+        this.boletos = boleto;
         this.terminal = terminal;
         this.vehiculoAereo = vehiculoAereo;
     }
@@ -122,12 +124,12 @@ public class VueloModel {
         this.tripulacion = tripulacion;
     }
 
-    public BoletoModel getBoleto() {
-        return boleto;
+    public List<BoletoModel> getBoleto() {
+        return this.boletos;
     }
 
-    public void setBoleto(BoletoModel boleto) {
-        this.boleto = boleto;
+    public void setBoleto(List<BoletoModel> boleto) {
+        this.boletos = boleto;
     }
 
     public TerminalModel getTerminal() {
@@ -145,6 +147,5 @@ public class VueloModel {
     public void setVehiculoAereo(VehiculoAereoModel vehiculoAereo) {
         this.vehiculoAereo = vehiculoAereo;
     }
-    
-    
+
 }
