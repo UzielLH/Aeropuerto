@@ -6,6 +6,8 @@ package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service;
 
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.BoletoModel;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,10 +16,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface BoletoService {
-    public void registrarBoleto(BoletoModel boletoModel);
-    public List<BoletoModel> obtenerBoletos();
-    public BoletoModel getBoleto(int id);
-    public void actualizarDatosBoleto(BoletoModel boletoModel, int id);
-    public void borrarBoleto(int id);
-    public void borrarTodosLosBoletos();
+    BoletoModel registrarBoleto(BoletoModel boletoModel);
+
+    List<BoletoModel> obtenerBoletos();
+
+    Optional<BoletoModel> getBoleto(int id);
+
+    Optional<BoletoModel> actualizarDatosBoleto(BoletoModel boletoModel, int id);
+
+    Optional<BoletoModel> borrarBoleto(int id);
+
+    void borrarTodosLosBoletos();
 }

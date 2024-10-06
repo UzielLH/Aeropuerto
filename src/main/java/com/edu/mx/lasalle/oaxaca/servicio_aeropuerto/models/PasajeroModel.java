@@ -14,9 +14,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "pasajero")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PasajeroModel implements Persona {
 
     @Id
@@ -36,76 +42,6 @@ public class PasajeroModel implements Persona {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "pasajero_id")
     private List<EquipajeModel> equipajes;
-
-    public PasajeroModel() {
-    }
-
-    public PasajeroModel(int id, String nombre, String apellido, String direccion, LocalDate fechaNacimiento,
-            Boolean discapacidad, String nacionalidad) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.fechaNacimiento = fechaNacimiento;
-        this.discapacidad = discapacidad;
-        this.nacionalidad = nacionalidad;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public LocalDate getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public Boolean getDiscapacidad() {
-        return discapacidad;
-    }
-
-    public void setDiscapacidad(Boolean discapacidad) {
-        this.discapacidad = discapacidad;
-    }
-
-    public String getNacionalidad() {
-        return nacionalidad;
-    }
-
-    public void setNacionalidad(String nacionalidad) {
-        this.nacionalidad = nacionalidad;
-    }
 
     @Override
     public void viajar() {

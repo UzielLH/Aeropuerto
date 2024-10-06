@@ -5,7 +5,7 @@
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service;
 
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.TripulacionModel;
-import java.util.List;
+import java.util.*;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,10 +14,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface TripulacionService {
-    public void registrarTripulacion(TripulacionModel tripulacionModel);
-    public List<TripulacionModel> obtenerTripulacion();
-    public TripulacionModel getTripulacion(int id);
-    public void actualizarDatosTripulacion(TripulacionModel tripulacionModel, int id);
-    public void borrarTripulacion(int id);
-    public void borrarTodosTripulacion();
+    TripulacionModel registrarTripulacion(TripulacionModel tripulacionModel);
+
+    List<TripulacionModel> obtenerTripulacion();
+
+    Optional<TripulacionModel> getTripulacion(int id);
+
+    Optional<TripulacionModel> actualizarDatosTripulacion(TripulacionModel tripulacionModel, int id);
+
+    Optional<TripulacionModel> borrarTripulacion(int id);
+
+    void borrarTodosTripulacion();
 }

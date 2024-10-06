@@ -6,6 +6,8 @@ package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service;
 
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.CopilotoModel;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,10 +16,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface CopilotoService {
-    public void registrarCopiloto(CopilotoModel copilotoModel);
-    public List<CopilotoModel> obtenerCopilotos();
-    public CopilotoModel getCopiloto(int id);
-    public void actualizarDatosCopiloto(CopilotoModel copilotoModel, int id);
-    public void borrarCopiloto(int id);
-    public void borrarTodosLosCopilotos();
+    CopilotoModel registrarCopiloto(CopilotoModel copilotoModel);
+
+    List<CopilotoModel> obtenerCopilotos();
+
+    Optional<CopilotoModel> getCopiloto(int id);
+
+    Optional<CopilotoModel> actualizarDatosCopiloto(CopilotoModel copilotoModel, int id);
+
+    Optional<CopilotoModel> borrarCopiloto(int id);
+
+    void borrarTodosLosCopilotos();
 }

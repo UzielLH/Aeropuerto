@@ -5,7 +5,7 @@
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service;
 
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.SobrecargoModel;
-import java.util.List;
+import java.util.*;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,10 +14,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface SobrecargoService {
-    public void registrarSobrecargo(SobrecargoModel sobrecargoModel);
-    public List<SobrecargoModel> obtenerSobrecargos();
-    public SobrecargoModel getSobrecargos(int id);
-    public void actualizarDatosSobrecargo(SobrecargoModel sobrecargoModel, int id);
-    public void borrarCopiloto(int id);
-    public void borrarTodosLosCopilotos();
+    SobrecargoModel registrarSobrecargo(SobrecargoModel sobrecargoModel);
+
+    List<SobrecargoModel> obtenerSobrecargos();
+
+    Optional<SobrecargoModel> getSobrecargos(int id);
+
+    Optional<SobrecargoModel> actualizarDatosSobrecargo(SobrecargoModel sobrecargoModel, int id);
+
+    Optional<SobrecargoModel> borrarCopiloto(int id);
+
+    void borrarTodosLosCopilotos();
 }

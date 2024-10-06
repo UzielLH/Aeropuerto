@@ -13,6 +13,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 /**
@@ -21,74 +25,18 @@ import java.util.List;
  */
 @Entity
 @Table(name = "aeropuerto")
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Aeropuerto {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    
+
     private int claveAeropuerto;
     private String nombre;
     private int numeroPistas;
-    
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "claveTerminal")
-    
     private List<TerminalModel> terminal;
-
-    public Aeropuerto(int claveAeropuerto, String nombre, int numeroPistas, List<TerminalModel> terminal, String tipoAvion) {
-        this.claveAeropuerto = claveAeropuerto;
-        this.nombre = nombre;
-        this.numeroPistas = numeroPistas;
-        this.terminal = terminal;
-        this.tipoAvion = tipoAvion;
-    }
-
-    public Aeropuerto() {
-    }
-
-    
-    
-    
-    public List<TerminalModel> getTerminal() {
-        return terminal;
-    }
-
-    public void setTerminal(List<TerminalModel> terminal) {
-        this.terminal = terminal;
-    }
-    
-    public int getClaveAeropuerto() {
-        return claveAeropuerto;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public int getNumeroPistas() {
-        return numeroPistas;
-    }
-
-    public String getTipoAvion() {
-        return tipoAvion;
-    }
-    public String tipoAvion;
-
-    public void setClaveAeropuerto(int claveAeropuerto) {
-        this.claveAeropuerto = claveAeropuerto;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public void setNumeroPistas(int numeroPistas) {
-        this.numeroPistas = numeroPistas;
-    }
-
-    public void setTipoAvion(String tipoAvion) {
-        this.tipoAvion = tipoAvion;
-    }
-    
- }
-
+}

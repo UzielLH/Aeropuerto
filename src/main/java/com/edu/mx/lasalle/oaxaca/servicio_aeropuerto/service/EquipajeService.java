@@ -3,19 +3,21 @@ package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.EquipajeModel;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public interface EquipajeService {
-    public void registrarEquipaje(EquipajeModel equipajeModel);
+    EquipajeModel registrarEquipaje(EquipajeModel equipajeModel);
 
-    public List<EquipajeModel> obtenerEquipajes();
+    List<EquipajeModel> obtenerEquipajes();
 
-    public EquipajeModel getEquipaje(int id);
+    Optional<EquipajeModel> getEquipaje(int id);
 
-    public void actualizarDatosEquipaje(EquipajeModel equipajeModel, int id);
+    Optional<EquipajeModel> actualizarDatosEquipaje(EquipajeModel equipajeModel, int id);
 
-    public void borrarEquipaje(int id);
+    Optional<EquipajeModel> borrarEquipaje(int id);
 
-    public void borrarTodosLosEquipajes();
+    void borrarTodosLosEquipajes();
 }

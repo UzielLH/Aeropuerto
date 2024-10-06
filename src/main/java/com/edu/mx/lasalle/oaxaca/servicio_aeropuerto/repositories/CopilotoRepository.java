@@ -5,6 +5,9 @@
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.repositories;
 
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.CopilotoModel;
+
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -12,5 +15,5 @@ import org.springframework.data.repository.CrudRepository;
  * @author tokay
  */
 public interface CopilotoRepository extends CrudRepository<CopilotoModel, Integer> {
-    public CopilotoModel findById(int id);
+    public Optional<CopilotoModel> findByIdTripulacion(int id);
 }

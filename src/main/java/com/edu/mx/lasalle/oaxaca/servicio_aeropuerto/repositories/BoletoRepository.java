@@ -5,6 +5,9 @@
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.repositories;
 
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.BoletoModel;
+
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -12,6 +15,5 @@ import org.springframework.data.repository.CrudRepository;
  * @author tokay
  */
 public interface BoletoRepository extends CrudRepository<BoletoModel, Integer> {
-    public BoletoModel findById(int id);
-    
+    public Optional<BoletoModel> findByIdBoleto(int id);
 }

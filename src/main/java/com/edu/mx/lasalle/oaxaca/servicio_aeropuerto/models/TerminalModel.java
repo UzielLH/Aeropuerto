@@ -12,6 +12,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
@@ -19,6 +22,9 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "terminal")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TerminalModel {
 
     @Id
@@ -30,38 +36,4 @@ public class TerminalModel {
 
     @OneToOne(mappedBy = "terminal", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     private VueloModel vuelo;
-
-    public TerminalModel(int claveTerminal, int capacidad, boolean disponible) {
-        this.claveTerminal = claveTerminal;
-        this.capacidad = capacidad;
-        this.disponible = disponible;
-    }
-
-    public TerminalModel() {
-    }
-
-    public int getClaveTerminal() {
-        return claveTerminal;
-    }
-
-    public int getCapacidad() {
-        return capacidad;
-    }
-
-    public boolean isDisponible() {
-        return disponible;
-    }
-
-    public void setClaveTerminal(int claveTerminal) {
-        this.claveTerminal = claveTerminal;
-    }
-
-    public void setCapacidad(int capacidad) {
-        this.capacidad = capacidad;
-    }
-
-    public void setDisponible(boolean disponible) {
-        this.disponible = disponible;
-    }
-
 }

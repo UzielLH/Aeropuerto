@@ -11,6 +11,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
 import java.time.LocalDate;
 
 /**
@@ -20,6 +25,10 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "tripulacion")
 @Inheritance(strategy = InheritanceType.JOINED)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
 public class TripulacionModel implements Persona {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -32,85 +41,6 @@ public class TripulacionModel implements Persona {
     private String apellido;
     private LocalDate fechaNac;
     private String genero;
-
-    public TripulacionModel() {
-    }
-
-    public TripulacionModel(int idTripulacion, int antiguedad, String turno, int horasVuelo, String nombre,
-            String apellido, LocalDate fechaNac, String genero) {
-        this.idTripulacion = idTripulacion;
-        this.antiguedad = antiguedad;
-        this.turno = turno;
-        this.horasVuelo = horasVuelo;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.fechaNac = fechaNac;
-        this.genero = genero;
-    }
-
-    public int getIdTripulacion() {
-        return idTripulacion;
-    }
-
-    public void setIdTripulacion(int idTripulacion) {
-        this.idTripulacion = idTripulacion;
-    }
-
-    public int getAntiguedad() {
-        return antiguedad;
-    }
-
-    public void setAntiguedad(int antiguedad) {
-        this.antiguedad = antiguedad;
-    }
-
-    public String getTurno() {
-        return turno;
-    }
-
-    public void setTurno(String turno) {
-        this.turno = turno;
-    }
-
-    public int getHorasVuelo() {
-        return horasVuelo;
-    }
-
-    public void setHorasVuelo(int horasVuelo) {
-        this.horasVuelo = horasVuelo;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public LocalDate getFechaNac() {
-        return fechaNac;
-    }
-
-    public void setFechaNac(LocalDate fechaNac) {
-        this.fechaNac = fechaNac;
-    }
-
-    public String getGenero() {
-        return genero;
-    }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
 
     @Override
     public void viajar() {
@@ -141,5 +71,4 @@ public class TripulacionModel implements Persona {
     public void comer() {
         System.out.println("Tripulacion comiendo");
     }
-
 }

@@ -14,6 +14,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +27,9 @@ import java.util.List;
  */
 @Entity
 @Table(name = "vuelo")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class VueloModel {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -49,103 +56,4 @@ public class VueloModel {
     @OneToOne
     @JoinColumn(name = "vehiculoAereo_id", referencedColumnName = "matricula")
     private VehiculoAereoModel vehiculoAereo;
-
-    public VueloModel() {
-    }
-
-    public VueloModel(int idVuelo, String origen, String destino, String duracion, Date horaSalida, Date horaLlegada,
-            List<TripulacionModel> tripulacion, List<BoletoModel> boleto, TerminalModel terminal,
-            VehiculoAereoModel vehiculoAereo) {
-        this.idVuelo = idVuelo;
-        this.origen = origen;
-        this.destino = destino;
-        this.duracion = duracion;
-        this.horaSalida = horaSalida;
-        this.horaLlegada = horaLlegada;
-        this.tripulacion = tripulacion;
-        this.boletos = boleto;
-        this.terminal = terminal;
-        this.vehiculoAereo = vehiculoAereo;
-    }
-
-    public int getIdVuelo() {
-        return idVuelo;
-    }
-
-    public void setIdVuelo(int idVuelo) {
-        this.idVuelo = idVuelo;
-    }
-
-    public String getOrigen() {
-        return origen;
-    }
-
-    public void setOrigen(String origen) {
-        this.origen = origen;
-    }
-
-    public String getDestino() {
-        return destino;
-    }
-
-    public void setDestino(String destino) {
-        this.destino = destino;
-    }
-
-    public String getDuracion() {
-        return duracion;
-    }
-
-    public void setDuracion(String duracion) {
-        this.duracion = duracion;
-    }
-
-    public Date getHoraSalida() {
-        return horaSalida;
-    }
-
-    public void setHoraSalida(Date horaSalida) {
-        this.horaSalida = horaSalida;
-    }
-
-    public Date getHoraLlegada() {
-        return horaLlegada;
-    }
-
-    public void setHoraLlegada(Date horaLlegada) {
-        this.horaLlegada = horaLlegada;
-    }
-
-    public List<TripulacionModel> getTripulacion() {
-        return tripulacion;
-    }
-
-    public void setTripulacion(List<TripulacionModel> tripulacion) {
-        this.tripulacion = tripulacion;
-    }
-
-    public List<BoletoModel> getBoleto() {
-        return this.boletos;
-    }
-
-    public void setBoleto(List<BoletoModel> boleto) {
-        this.boletos = boleto;
-    }
-
-    public TerminalModel getTerminal() {
-        return terminal;
-    }
-
-    public void setTerminal(TerminalModel terminal) {
-        this.terminal = terminal;
-    }
-
-    public VehiculoAereoModel getVehiculoAereo() {
-        return vehiculoAereo;
-    }
-
-    public void setVehiculoAereo(VehiculoAereoModel vehiculoAereo) {
-        this.vehiculoAereo = vehiculoAereo;
-    }
-
 }

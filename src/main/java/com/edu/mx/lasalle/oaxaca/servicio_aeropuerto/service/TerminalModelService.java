@@ -5,7 +5,7 @@
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service;
 
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.TerminalModel;
-import java.util.List;
+import java.util.*;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,10 +14,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface TerminalModelService {
-    public void registrarTerminal(TerminalModel terminalModel);
-    public List<TerminalModel> obtenerTerminales();
-    public TerminalModel getTerminal(int claveTerminal);
-    public void actualizarDatosTerminal(TerminalModel terminalModel, int claveTerminal);
-    public void borrarTerminal(int claveTerminal);
-    public void borrarTodosLasTerminales();
+    TerminalModel registrarTerminal(TerminalModel terminalModel);
+
+    List<TerminalModel> obtenerTerminales();
+
+    Optional<TerminalModel> getTerminal(int claveTerminal);
+
+    Optional<TerminalModel> actualizarDatosTerminal(TerminalModel terminalModel, int claveTerminal);
+
+    Optional<TerminalModel> borrarTerminal(int claveTerminal);
+
+    void borrarTodosLasTerminales();
 }

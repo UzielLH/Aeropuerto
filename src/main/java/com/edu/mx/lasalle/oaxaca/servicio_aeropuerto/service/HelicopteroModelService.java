@@ -5,7 +5,7 @@
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service;
 
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.HelicopteroModel;
-import java.util.List;
+import java.util.*;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,10 +14,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface HelicopteroModelService {
-    public void registrarHelicoptero(HelicopteroModel helicopteroModel);
-    public List<HelicopteroModel> obtenerHelicopteros();
-    public HelicopteroModel getHelicoptero(int matricula);
-    public void actualizarDatosHelicoptero(HelicopteroModel helicopteroModel, int matricula);
-    public void borrarHelicoptero(int matricula);
-    public void borrarTodosLosHelicopteros();
+    HelicopteroModel registrarHelicoptero(HelicopteroModel helicopteroModel);
+
+    List<HelicopteroModel> obtenerHelicopteros();
+
+    Optional<HelicopteroModel> getHelicoptero(int matricula);
+
+    Optional<HelicopteroModel> actualizarDatosHelicoptero(HelicopteroModel helicopteroModel, int matricula);
+
+    Optional<HelicopteroModel> borrarHelicoptero(int matricula);
+
+    void borrarTodosLosHelicopteros();
 }

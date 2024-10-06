@@ -6,6 +6,8 @@ package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service;
 
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.AvionetaModel;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,10 +16,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface AvionetaModelService {
-    public void registrarAvioneta(AvionetaModel avionetaModel);
-    public List<AvionetaModel> obtenerAvionetas();
-    public AvionetaModel getAvioneta(int matricula);
-    public void actualizarDatosAvioneta(AvionetaModel avionetaModel, int matricula);
-    public void borrarAvioneta(int matricula);
-    public void borrarTodosLasAvionetas();
+    AvionetaModel registrarAvioneta(AvionetaModel avionetaModel);
+
+    List<AvionetaModel> obtenerAvionetas();
+
+    Optional<AvionetaModel> getAvioneta(int matricula);
+
+    Optional<AvionetaModel> actualizarDatosAvioneta(AvionetaModel avionetaModel, int matricula);
+
+    Optional<AvionetaModel> borrarAvioneta(int matricula);
+
+    void borrarTodosLasAvionetas();
 }

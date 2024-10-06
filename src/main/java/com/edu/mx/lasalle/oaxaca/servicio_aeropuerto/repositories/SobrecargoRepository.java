@@ -5,6 +5,9 @@
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.repositories;
 
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.SobrecargoModel;
+
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -12,6 +15,5 @@ import org.springframework.data.repository.CrudRepository;
  * @author tokay
  */
 public interface SobrecargoRepository extends CrudRepository<SobrecargoModel, Integer> {
-        public SobrecargoModel findById(int id);
-    
+        public Optional<SobrecargoModel> findByIdTripulacion(int id);
 }

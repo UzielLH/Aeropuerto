@@ -5,7 +5,7 @@
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service;
 
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.VehiculoAereoModel;
-import java.util.List;
+import java.util.*;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,10 +14,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface VehiculoAereoModelService {
-    public void registrarVehiculoAereo(VehiculoAereoModel vehiculoAereoModel);
-    public List<VehiculoAereoModel> obtenerVehiculosAereos();
-    public VehiculoAereoModel getVehiculoAereo(int matricula);
-    public void actualizarDatosVehiculoAereo(VehiculoAereoModel vehiculoAereoModel, int matricula);
-    public void borrarVehiculoAereo(int matricula);
-    public void borrarTodosLosVehiculosAereos();
+    VehiculoAereoModel registrarVehiculoAereo(VehiculoAereoModel vehiculoAereoModel);
+
+    List<VehiculoAereoModel> obtenerVehiculosAereos();
+
+    Optional<VehiculoAereoModel> getVehiculoAereo(int matricula);
+
+    Optional<VehiculoAereoModel> actualizarDatosVehiculoAereo(VehiculoAereoModel vehiculoAereoModel, int matricula);
+
+    Optional<VehiculoAereoModel> borrarVehiculoAereo(int matricula);
+
+    void borrarTodosLosVehiculosAereos();
 }

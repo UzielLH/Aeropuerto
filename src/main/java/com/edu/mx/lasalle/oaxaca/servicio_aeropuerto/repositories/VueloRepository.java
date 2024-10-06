@@ -5,12 +5,15 @@
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.repositories;
 
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.VueloModel;
+
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author tokay
  */
-public interface VueloRepository extends CrudRepository<VueloModel, Integer>{
-    public VueloModel findById(int id);
+public interface VueloRepository extends CrudRepository<VueloModel, Integer> {
+    public Optional<VueloModel> findByIdVuelo(int id);
 }

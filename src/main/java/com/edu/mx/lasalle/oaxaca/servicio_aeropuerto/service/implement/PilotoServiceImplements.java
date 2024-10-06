@@ -9,8 +9,12 @@ import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.TripulacionModel;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.repositories.PilotoRepository;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service.PilotoService;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -21,35 +25,65 @@ public class PilotoServiceImplements implements PilotoService {
 
     @Autowired
     private PilotoRepository pilotoRepository;
+
+    @Transactional
     @Override
-    public void registrarPiloto(PilotoModel pilotoModel) {
-        pilotoRepository.save(pilotoModel);
+    public PilotoModel registrarPiloto(PilotoModel pilotoModel) {
+        return pilotoRepository.save(pilotoModel);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<PilotoModel> obtenerPilotos() {
-        return(List<PilotoModel>) pilotoRepository.findAll();
+        return (List<PilotoModel>) pilotoRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public PilotoModel getPilotos(int id) {
-        return pilotoRepository.findById(id);
+    public Optional<PilotoModel> getPilotos(int id) {
+        return pilotoRepository.findByIdTripulacion(id);
     }
 
+    @Transactional
+    @Modifying
     @Override
-    public void actualizarDatosPiloto(PilotoModel pilotoModel, int id) {
-        pilotoModel.setIdTripulacion(id);
-        pilotoRepository.save(pilotoModel);
+    public Optional<PilotoModel> actualizarDatosPiloto(PilotoModel pilotoModel, int id) {
+        Optional<PilotoModel> pilotoOptional = pilotoRepository.findByIdTripulacion(id);
+        if (pilotoOptional.isPresent()) {
+            PilotoModel pilotoActualizado = pilotoOptional.orElseThrow();
+            pilotoActualizado.setAntiguedad(pilotoModel.getAntiguedad());
+            pilotoActualizado.setTurno(pilotoModel.getTurno());
+            pilotoActualizado.setHorasVuelo(pilotoModel.getHorasVuelo());
+            pilotoActualizado.setNombre(pilotoModel.getNombre());
+            pilotoActualizado.setApellido(pilotoModel.getApellido());
+            pilotoActualizado.setFechaNac(pilotoModel.getFechaNac());
+            pilotoActualizado.setGenero(pilotoModel.getGenero());
+            pilotoActualizado.setRango(pilotoModel.getRango());
+            pilotoActualizado.setLicencia(pilotoModel.getLicencia());
+            pilotoActualizado.setTipoAeronaves(pilotoModel.getTipoAeronaves());
+            pilotoActualizado.setSaludMental(pilotoModel.getSaludMental());
+            return Optional.of(pilotoRepository.save(pilotoActualizado));
+        }
+        return Optional.empty();
     }
 
+    @Transactional
+    @Modifying
     @Override
-    public void borrarPiloto(int id) {
-        pilotoRepository.deleteById(id);
+    public Optional<PilotoModel> borrarPiloto(int id) {
+        Optional<PilotoModel> pilotoOptional = pilotoRepository.findByIdTripulacion(id);
+        if (pilotoOptional.isPresent()) {
+            pilotoRepository.delete(pilotoOptional.orElseThrow());
+            return pilotoOptional;
+        }
+        return Optional.empty();
     }
 
+    @Transactional
+    @Modifying
     @Override
     public void borrarTodosLosPilotos() {
         pilotoRepository.deleteAll();
     }
-    
+
 }

@@ -5,6 +5,9 @@
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.repositories;
 
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.AvionModel;
+
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -12,5 +15,5 @@ import org.springframework.data.repository.CrudRepository;
  * @author ferrc
  */
 public interface AvionModelRepository extends CrudRepository<AvionModel, Integer> {
-    public AvionModel findByMatricula(int matricula);
+    public Optional<AvionModel> findByMatricula(int matricula);
 }

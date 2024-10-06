@@ -3,7 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.repositories;
+
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.VehiculoAereoModel;
+
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -11,5 +15,5 @@ import org.springframework.data.repository.CrudRepository;
  * @author ferrc
  */
 public interface VehiculoAereoModelRepository extends CrudRepository<VehiculoAereoModel, Integer> {
-    public VehiculoAereoModel findByMatricula(int matricula);
+    public Optional<VehiculoAereoModel> findByMatricula(int matricula);
 }

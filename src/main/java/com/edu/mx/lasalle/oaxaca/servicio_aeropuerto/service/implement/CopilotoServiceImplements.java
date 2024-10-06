@@ -8,8 +8,12 @@ import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.CopilotoModel;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.repositories.CopilotoRepository;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service.CopilotoService;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -19,35 +23,63 @@ import org.springframework.stereotype.Service;
 public class CopilotoServiceImplements implements CopilotoService {
     @Autowired
     private CopilotoRepository copilotoRepository;
+
+    @Transactional
     @Override
-    public void registrarCopiloto(CopilotoModel copilotoModel) {
-        copilotoRepository.save(copilotoModel);
+    public CopilotoModel registrarCopiloto(CopilotoModel copilotoModel) {
+        return copilotoRepository.save(copilotoModel);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<CopilotoModel> obtenerCopilotos() {
-        return(List<CopilotoModel>) copilotoRepository.findAll();
+        return (List<CopilotoModel>) copilotoRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Optional<CopilotoModel> getCopiloto(int id) {
+        return copilotoRepository.findByIdTripulacion(id);
+    }
+
+    @Transactional
+    @Modifying
+    @Override
+    public Optional<CopilotoModel> actualizarDatosCopiloto(CopilotoModel copilotoModel, int id) {
+        Optional<CopilotoModel> copilotoOptional = copilotoRepository.findById(id);
+        if (copilotoOptional.isPresent()) {
+            CopilotoModel copilotoActualizado = copilotoOptional.orElseThrow();
+            copilotoActualizado.setAntiguedad(copilotoModel.getAntiguedad());
+            copilotoActualizado.setTurno(copilotoModel.getTurno());
+            copilotoActualizado.setHorasVuelo(copilotoModel.getHorasVuelo());
+            copilotoActualizado.setNombre(copilotoModel.getNombre());
+            copilotoActualizado.setApellido(copilotoModel.getApellido());
+            copilotoActualizado.setFechaNac(copilotoModel.getFechaNac());
+            copilotoActualizado.setGenero(copilotoModel.getGenero());
+            copilotoActualizado.setRango(copilotoModel.getRango());
+            copilotoActualizado.setTiempoRestantePiloto(copilotoModel.getTiempoRestantePiloto());
+            return Optional.of(copilotoRepository.save(copilotoActualizado));
+        }
+        return Optional.empty();
     }
 
     @Override
-    public CopilotoModel getCopiloto(int id) {
-        return copilotoRepository.findById(id);
+    @Transactional
+    @Modifying
+    public Optional<CopilotoModel> borrarCopiloto(int id) {
+        Optional<CopilotoModel> copilotoOptional = copilotoRepository.findById(id);
+        if (copilotoOptional.isPresent()) {
+            copilotoRepository.deleteById(id);
+            return copilotoOptional;
+        }
+        return Optional.empty();
     }
 
     @Override
-    public void actualizarDatosCopiloto(CopilotoModel copilotoModel, int id) {
-        copilotoModel.setIdTripulacion(id);
-        copilotoRepository.save(copilotoModel);
-    }
-
-    @Override
-    public void borrarCopiloto(int id) {
-        copilotoRepository.deleteById(id);
-    }
-
-    @Override
+    @Transactional
+    @Modifying
     public void borrarTodosLosCopilotos() {
         copilotoRepository.deleteAll();
     }
-    
+
 }
