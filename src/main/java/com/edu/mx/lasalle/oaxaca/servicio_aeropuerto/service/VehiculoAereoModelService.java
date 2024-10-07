@@ -6,13 +6,11 @@ package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service;
 
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.VehiculoAereoModel;
 import java.util.*;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author ferrc
  */
-@Service
 public interface VehiculoAereoModelService {
     VehiculoAereoModel registrarVehiculoAereo(VehiculoAereoModel vehiculoAereoModel);
 

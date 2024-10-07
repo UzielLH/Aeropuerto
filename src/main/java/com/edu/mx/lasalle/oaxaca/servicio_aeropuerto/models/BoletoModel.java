@@ -14,10 +14,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  *
@@ -25,6 +30,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name = "boleto")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class BoletoModel {
 
     @Id
@@ -37,60 +45,9 @@ public class BoletoModel {
     @JsonIgnore
     private PasajeroModel pasajeroModel;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idVuelo", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne
+    @JoinColumn(name = "vuelo_id")
+    @JsonIgnoreProperties({ "tripulacion", "boletos", "vehiculoAereo", "origen", "destino", "duracion", "horaSalida",
+            "horaLlegada", "terminal" })
     private VueloModel vuelo;
-
-    public BoletoModel(int idBoleto, String asiento, float costo, PasajeroModel pasajeroModel, VueloModel vueloModel) {
-        this.idBoleto = idBoleto;
-        this.asiento = asiento;
-        this.costo = costo;
-        this.pasajeroModel = pasajeroModel;
-        this.vuelo = vueloModel;
-    }
-
-    public BoletoModel() {
-    }
-
-    public int getIdBoleto() {
-        return idBoleto;
-    }
-
-    public void setIdBoleto(int idBoleto) {
-        this.idBoleto = idBoleto;
-    }
-
-    public String getAsiento() {
-        return asiento;
-    }
-
-    public void setAsiento(String asiento) {
-        this.asiento = asiento;
-    }
-
-    public float getCosto() {
-        return costo;
-    }
-
-    public void setCosto(float costo) {
-        this.costo = costo;
-    }
-
-    public PasajeroModel getPasajeroModel() {
-        return pasajeroModel;
-    }
-
-    public void setPasajeroModel(PasajeroModel pasajeroModel) {
-        this.pasajeroModel = pasajeroModel;
-    }
-
-    public VueloModel getVueloModel() {
-        return vuelo;
-    }
-
-    public void setVueloModel(VueloModel vueloModel) {
-        this.vuelo = vueloModel;
-    }
-
 }

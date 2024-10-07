@@ -8,13 +8,10 @@ import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.Aeropuerto;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Service;
-
 /**
  *
  * @author ferrc
  */
-@Service
 public interface AeropuertoService {
     Aeropuerto registrarAeropuerto(Aeropuerto aeropuerto);
 

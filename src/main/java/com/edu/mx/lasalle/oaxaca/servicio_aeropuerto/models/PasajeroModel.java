@@ -35,7 +35,7 @@ public class PasajeroModel implements Persona {
     private Boolean discapacidad;
     private String nacionalidad;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "boleto_id", referencedColumnName = "idBoleto")
     private BoletoModel boletoModel;
 

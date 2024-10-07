@@ -10,6 +10,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -41,6 +45,10 @@ public class TripulacionModel implements Persona {
     private String apellido;
     private LocalDate fechaNac;
     private String genero;
+
+    @ManyToOne
+    @JoinColumn(name = "vuelo_id")
+    private VueloModel vuelo;
 
     @Override
     public void viajar() {

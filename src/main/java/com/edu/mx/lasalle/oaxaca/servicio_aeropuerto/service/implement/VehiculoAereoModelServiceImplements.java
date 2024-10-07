@@ -4,6 +4,9 @@
  */
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service.implement;
 
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.AvionModel;
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.AvionetaModel;
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.HelicopteroModel;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.VehiculoAereoModel;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.repositories.VehiculoAereoModelRepository;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service.VehiculoAereoModelService;
@@ -12,12 +15,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author ferrc
  */
+@Service
 public class VehiculoAereoModelServiceImplements implements VehiculoAereoModelService {
 
     @Autowired
@@ -58,6 +63,29 @@ public class VehiculoAereoModelServiceImplements implements VehiculoAereoModelSe
             vehiculoAereoActualizado.setLlantas(vehiculoAereoModel.getLlantas());
             vehiculoAereoActualizado.setTanque(vehiculoAereoModel.getTanque());
             vehiculoAereoActualizado.setDistancia(vehiculoAereoModel.getDistancia());
+
+            if (vehiculoAereoActualizado instanceof HelicopteroModel) {
+                HelicopteroModel helicopteroModel = (HelicopteroModel) vehiculoAereoActualizado;
+                helicopteroModel.setHelices(((HelicopteroModel) vehiculoAereoModel).getHelices());
+                helicopteroModel.setTipo(((HelicopteroModel) vehiculoAereoModel).getTipo());
+            }
+
+            if (vehiculoAereoActualizado instanceof AvionModel) {
+                AvionModel avionModel = (AvionModel) vehiculoAereoActualizado;
+                avionModel.setAerolinea(((AvionModel) vehiculoAereoModel).getAerolinea());
+                avionModel.setTipoMotor(((AvionModel) vehiculoAereoModel).getTipoMotor());
+                avionModel.setPuertas(((AvionModel) vehiculoAereoModel).getPuertas());
+                avionModel.setTipo(((AvionModel) vehiculoAereoModel).getTipo());
+            }
+
+            if (vehiculoAereoActualizado instanceof AvionetaModel) {
+                AvionetaModel avionetaModel = (AvionetaModel) vehiculoAereoActualizado;
+                avionetaModel.setNumeroMotores(((AvionetaModel) vehiculoAereoModel).getNumeroMotores());
+                avionetaModel.setTipoPista(((AvionetaModel) vehiculoAereoModel).getTipoPista());
+                avionetaModel.setClasificacion(((AvionetaModel) vehiculoAereoModel).getClasificacion());
+                avionetaModel.setTipoCombustion(((AvionetaModel) vehiculoAereoModel).getTipoCombustion());
+            }
+
             return Optional.of(vehiculoAereoModelRepository.save(vehiculoAereoActualizado));
         }
         return Optional.empty();

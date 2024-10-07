@@ -8,13 +8,10 @@ import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.CopilotoModel;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Service;
-
 /**
  *
  * @author tokay
  */
-@Service
 public interface CopilotoService {
     CopilotoModel registrarCopiloto(CopilotoModel copilotoModel);
 

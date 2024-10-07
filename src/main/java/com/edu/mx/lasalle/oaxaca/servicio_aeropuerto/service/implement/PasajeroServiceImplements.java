@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.BoletoModel;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.PasajeroModel;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.repositories.PasajeroRepository;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service.PasajeroService;
@@ -48,6 +49,16 @@ public class PasajeroServiceImplements implements PasajeroService {
             pasajeroActualizado.setFechaNacimiento(pasajeroModel.getFechaNacimiento());
             pasajeroActualizado.setDiscapacidad(pasajeroModel.getDiscapacidad());
             pasajeroActualizado.setNacionalidad(pasajeroModel.getNacionalidad());
+
+            // Actualizar BoletoModel
+            BoletoModel boletoActualizado = pasajeroActualizado.getBoletoModel();
+            BoletoModel boletoNuevo = pasajeroModel.getBoletoModel();
+            if (boletoActualizado != null && boletoNuevo != null) {
+                boletoActualizado.setAsiento(boletoNuevo.getAsiento());
+                boletoActualizado.setCosto(boletoNuevo.getCosto());
+                boletoActualizado.setVuelo(boletoNuevo.getVuelo());
+            }
+
             return Optional.of(pasajeroRepository.save(pasajeroActualizado));
         }
         return Optional.empty();

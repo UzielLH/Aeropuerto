@@ -12,12 +12,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author ferrc
  */
+@Service
 public class AeropuertoServiceImplements implements AeropuertoService {
 
     @Autowired
@@ -51,6 +53,7 @@ public class AeropuertoServiceImplements implements AeropuertoService {
             aeropuertoActualizado.setNombre(aeropuerto.getNombre());
             aeropuertoActualizado.setNumeroPistas(aeropuerto.getNumeroPistas());
             aeropuertoActualizado.setTerminal(aeropuerto.getTerminal());
+            aeropuertoActualizado.setTipoAvion(aeropuerto.getTipoAvion());
 
             return Optional.of(aeropuertoRepository.save(aeropuertoActualizado));
         }

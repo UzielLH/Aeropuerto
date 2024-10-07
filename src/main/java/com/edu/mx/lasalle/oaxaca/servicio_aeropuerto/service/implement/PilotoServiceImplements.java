@@ -5,7 +5,6 @@
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service.implement;
 
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.PilotoModel;
-import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.TripulacionModel;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.repositories.PilotoRepository;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service.PilotoService;
 import java.util.List;

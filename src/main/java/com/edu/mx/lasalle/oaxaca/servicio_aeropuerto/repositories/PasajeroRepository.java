@@ -1,7 +1,5 @@
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.repositories;
 
-import java.util.Optional;
-
 import org.springframework.data.repository.CrudRepository;
 
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.PasajeroModel;

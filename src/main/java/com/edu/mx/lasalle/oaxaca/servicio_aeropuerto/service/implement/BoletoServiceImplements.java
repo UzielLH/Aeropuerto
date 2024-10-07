@@ -12,12 +12,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author tokay
  */
+@Service
 public class BoletoServiceImplements implements BoletoService {
     @Autowired
     private BoletoRepository boletoRepository;
@@ -49,7 +51,7 @@ public class BoletoServiceImplements implements BoletoService {
             BoletoModel boletoActualizado = boletoOptional.orElseThrow();
             boletoActualizado.setAsiento(boletoModel.getAsiento());
             boletoActualizado.setCosto(boletoModel.getCosto());
-            boletoActualizado.setVueloModel(boletoModel.getVueloModel());
+            boletoActualizado.setVuelo(boletoModel.getVuelo());
             return Optional.of(boletoRepository.save(boletoActualizado));
         }
         return Optional.empty();

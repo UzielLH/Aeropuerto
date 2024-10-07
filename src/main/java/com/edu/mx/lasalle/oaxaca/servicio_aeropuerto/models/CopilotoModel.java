@@ -23,5 +23,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CopilotoModel extends TripulacionModel {
     private String rango;
-    private float TiempoRestantePiloto;
+    private Integer tiempoRestantePiloto;
 }
