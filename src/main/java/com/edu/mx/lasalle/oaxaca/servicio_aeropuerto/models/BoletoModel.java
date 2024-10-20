@@ -23,6 +23,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  *
@@ -42,7 +43,8 @@ public class BoletoModel {
     private float costo;
 
     @OneToOne(mappedBy = "boletoModel", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    @JsonIgnore
+    // @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private PasajeroModel pasajeroModel;
 
     @ManyToOne

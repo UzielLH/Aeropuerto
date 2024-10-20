@@ -4,6 +4,7 @@
  */
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service;
 
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.PasajeroModel;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.VueloModel;
 import java.util.*;
 
@@ -14,6 +15,8 @@ import java.util.*;
 public interface VueloService {
     VueloModel registrarVuelo(VueloModel vueloModel);
 
+    VueloModel save(VueloModel vueloModel);
+
     List<VueloModel> obtenerVuelo();
 
     Optional<VueloModel> getVuelo(int id);
@@ -23,4 +26,8 @@ public interface VueloService {
     Optional<VueloModel> borrarVuelo(int id);
 
     void borrarTodosVuelo();
+
+    List<PasajeroModel> obtenerPasajeros(int id);
+
+    Map<String, Object> obtenerDetallesVuelo(int id);
 }

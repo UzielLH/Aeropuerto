@@ -4,18 +4,36 @@
  */
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service.implement;
 
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.dtos.TerminalDto;
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.dtos.TripulanteDto;
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.dtos.VehiculoAereoDto;
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.dtos.VueloDto;
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.CopilotoModel;
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.PasajeroModel;
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.PilotoModel;
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.SobrecargoModel;
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.TerminalModel;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.TripulacionModel;
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.VehiculoAereoModel;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.VueloModel;
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.repositories.PasajeroRepository;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.repositories.VueloRepository;
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service.AeropuertoService;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service.TerminalModelService;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service.TripulacionService;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service.VehiculoAereoModelService;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service.VueloService;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
@@ -40,38 +58,112 @@ public class VueloServiceImplements implements VueloService {
     @Autowired
     private VehiculoAereoModelService vehiculoAereoModelService;
 
+    @Autowired
+    private AeropuertoService aeropuertoService;
+
+    @Autowired
+    private PasajeroRepository pasajeroRepository;
+
+    @Autowired
+    private EntityManager entityManager;
+
+    // @Transactional
+    // @Override
+    // public VueloModel registrarVuelo(VueloModel vueloModel) {
+
+    // if (vueloModel.getTripulacionIds() == null) {
+    // vueloModel.setTripulacionIds(new ArrayList<>());
+    // }
+
+    // List<TripulacionModel> tripulacion = new ArrayList<>();
+
+    // vueloModel.getTripulacionIds().forEach(id -> {
+    // Optional<TripulacionModel> tripulacionOptional =
+    // tripulacionService.getTripulacion(id);
+    // tripulacion.add(tripulacionOptional.orElseThrow());
+    // });
+
+    // vueloModel.setTripulacion(tripulacion);
+
+    // vueloModel.setTerminal(terminalModelService.getTerminal(vueloModel.getTerminalId()).orElseThrow());
+
+    // vueloModel.setVehiculoAereo(
+    // vehiculoAereoModelService.getVehiculoAereo(vueloModel.getVehiculoAereoId()).orElseThrow());
+
+    // VueloModel vuelo = vueloRepository.save(vueloModel);
+
+    // vueloModel.getTripulacionIds().forEach(t -> {
+    // TripulacionModel tripulacionModel =
+    // tripulacionService.getTripulacion(t).orElseThrow();
+    // tripulacionModel.setVuelo(vuelo);
+    // tripulacionService.actualizarDatosTripulacion(tripulacionModel, t);
+
+    // });
+
+    // return getVuelo(vuelo.getIdVuelo()).orElseThrow();
+    // }
+
     @Transactional
     @Override
     public VueloModel registrarVuelo(VueloModel vueloModel) {
-
-        if (vueloModel.getTripulacionIds() == null) {
-            vueloModel.setTripulacionIds(new ArrayList<>());
+        TerminalModel terminal = entityManager.find(TerminalModel.class, vueloModel.getTerminal().getClaveTerminal());
+        if (terminal == null) {
+            throw new EntityNotFoundException(
+                    "No se encontró la terminal con clave " + vueloModel.getTerminal().getClaveTerminal());
         }
+        vueloModel.setTerminal(terminal);
+
+        VehiculoAereoModel vehiculoAereo = entityManager.find(VehiculoAereoModel.class,
+                vueloModel.getVehiculoAereo().getMatricula());
+        if (vehiculoAereo == null) {
+            throw new EntityNotFoundException(
+                    "No se encontró el vehículo aéreo con matrícula " + vueloModel.getVehiculoAereo().getMatricula());
+        }
+        vueloModel.setVehiculoAereo(vehiculoAereo);
+
+        List<TripulacionModel> tripulacion = vueloModel.getTripulacion().stream()
+                .map(tripulacionModel -> {
+                    TripulacionModel foundTripulacion = entityManager.find(TripulacionModel.class,
+                            tripulacionModel.getIdTripulacion());
+                    if (foundTripulacion == null) {
+                        throw new EntityNotFoundException(
+                                "No se encontró la tripulación con id " + tripulacionModel.getIdTripulacion());
+                    }
+                    return foundTripulacion;
+                })
+                .collect(Collectors.toList());
+
+        vueloModel.setTripulacion(tripulacion);
+
+        VueloModel savedVuelo = vueloRepository.save(vueloModel);
+
+        tripulacion.forEach(tripulacionModel -> {
+            tripulacionModel.setVuelo(savedVuelo);
+            entityManager.merge(tripulacionModel);
+        });
+
+        return savedVuelo;
+    }
+
+    @Transactional
+    @Override
+    public VueloModel save(VueloModel vueloModel) {
+
+        TerminalModel terminal = new TerminalModel();
+        terminal.setCapacidad(vueloModel.getTerminal().getCapacidad());
+        terminal.setDisponible(vueloModel.getTerminal().isDisponible());
+        terminal.setAeropuerto(aeropuertoService.getAeropuerto(1).orElseThrow());
+        TerminalModel terminalDb = terminalModelService.registrarTerminal(terminal);
+        vueloModel.setTerminal(terminalDb);
 
         List<TripulacionModel> tripulacion = new ArrayList<>();
-
         vueloModel.getTripulacionIds().forEach(id -> {
             Optional<TripulacionModel> tripulacionOptional = tripulacionService.getTripulacion(id);
             tripulacion.add(tripulacionOptional.orElseThrow());
         });
-
         vueloModel.setTripulacion(tripulacion);
 
-        vueloModel.setTerminal(terminalModelService.getTerminal(vueloModel.getTerminalId()).orElseThrow());
-
-        vueloModel.setVehiculoAereo(
-                vehiculoAereoModelService.getVehiculoAereo(vueloModel.getVehiculoAereoId()).orElseThrow());
-
-        VueloModel vuelo = vueloRepository.save(vueloModel);
-
-        vueloModel.getTripulacionIds().forEach(t -> {
-            TripulacionModel tripulacionModel = tripulacionService.getTripulacion(t).orElseThrow();
-            tripulacionModel.setVuelo(vuelo);
-            tripulacionService.actualizarDatosTripulacion(tripulacionModel, t);
-
-        });
-
-        return getVuelo(vuelo.getIdVuelo()).orElseThrow();
+        return vueloRepository.save(vueloModel);
     }
 
     @Transactional(readOnly = true)
@@ -149,6 +241,85 @@ public class VueloServiceImplements implements VueloService {
     @Override
     public void borrarTodosVuelo() {
         vueloRepository.deleteAll();
+    }
+
+    @Override
+    public List<PasajeroModel> obtenerPasajeros(int id) {
+        List<PasajeroModel> pasajeros = pasajeroRepository.findPasajerosByVueloId(id);
+        return pasajeros.stream()
+                .map(p -> PasajeroModel.builder()
+                        .id(p.getId())
+                        .nombre(p.getNombre())
+                        .apellido(p.getApellido())
+                        .direccion(p.getDireccion())
+                        .fechaNacimiento(p.getFechaNacimiento())
+                        .discapacidad(p.getDiscapacidad())
+                        .nacionalidad(p.getNacionalidad())
+                        .boletoModel(p.getBoletoModel())
+                        .equipajes(p.getEquipajes())
+                        .build())
+
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<String, Object> obtenerDetallesVuelo(int id) {
+        VueloModel vuelo = vueloRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Vuelo no encontrado"));
+
+        TerminalDto terminalDto = new TerminalDto(vuelo.getTerminal().getClaveTerminal(),
+                vuelo.getTerminal().getCapacidad());
+
+        VehiculoAereoDto vehiculoAereoDto = new VehiculoAereoDto(vuelo.getVehiculoAereo().getMatricula(),
+                vuelo.getVehiculoAereo().getModel(), vuelo.getVehiculoAereo().getSerie(),
+                vuelo.getVehiculoAereo().getCapacidad(), vuelo.getVehiculoAereo().getEstado(),
+                vuelo.getVehiculoAereo().getAntiguedad(), vuelo.getVehiculoAereo().getLlantas(),
+                vuelo.getVehiculoAereo().getTanque(), vuelo.getVehiculoAereo().getDistancia());
+
+        List<TripulanteDto> sobrecargos = new ArrayList<>();
+
+        for (TripulacionModel tripulante : vuelo.getTripulacion()) {
+            if (tripulante instanceof SobrecargoModel) {
+                SobrecargoModel sobrecargo = (SobrecargoModel) tripulante;
+                sobrecargos.add(new TripulanteDto(sobrecargo.getIdTripulacion(), sobrecargo.getAntiguedad(),
+                        sobrecargo.getTurno(), sobrecargo.getHorasVuelo(), sobrecargo.getNombre(),
+                        sobrecargo.getApellido(), sobrecargo.getFechaNac(), sobrecargo.getGenero()));
+            }
+        }
+
+        TripulanteDto piloto = vuelo.getTripulacion().stream()
+                .filter(tripulante -> tripulante instanceof PilotoModel)
+                .map(tripulante -> (PilotoModel) tripulante)
+                .map(pilotoModel -> new TripulanteDto(pilotoModel.getIdTripulacion(), pilotoModel.getAntiguedad(),
+                        pilotoModel.getTurno(), pilotoModel.getHorasVuelo(), pilotoModel.getNombre(),
+                        pilotoModel.getApellido(), pilotoModel.getFechaNac(), pilotoModel.getGenero()))
+                .findFirst()
+                .orElse(null);
+
+        TripulanteDto copiloto = vuelo.getTripulacion().stream()
+                .filter(tripulante -> tripulante instanceof CopilotoModel)
+                .map(tripulante -> (CopilotoModel) tripulante)
+                .map(copilotoModel -> new TripulanteDto(copilotoModel.getIdTripulacion(), copilotoModel.getAntiguedad(),
+                        copilotoModel.getTurno(), copilotoModel.getHorasVuelo(), copilotoModel.getNombre(),
+                        copilotoModel.getApellido(), copilotoModel.getFechaNac(), copilotoModel.getGenero()))
+                .findFirst()
+                .orElse(null);
+
+        VueloDto vueloDto = VueloDto.builder()
+                .idVuelo(vuelo.getIdVuelo())
+                .origen(vuelo.getOrigen())
+                .destino(vuelo.getDestino())
+                .duracion(vuelo.getDuracion())
+                .horaSalida(vuelo.getHoraSalida())
+                .horaLlegada(vuelo.getHoraLlegada())
+                .terminal(terminalDto)
+                .datosAvion(vehiculoAereoDto)
+                .piloto(piloto)
+                .copiloto(copiloto)
+                .sobrecargos(sobrecargos)
+                .build();
+
+        return Map.of("vuelo", vueloDto);
     }
 
 }

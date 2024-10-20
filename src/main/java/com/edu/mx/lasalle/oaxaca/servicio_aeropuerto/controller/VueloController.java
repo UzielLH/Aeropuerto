@@ -2,6 +2,7 @@ package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.controller;
 
 import java.util.List;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,9 +43,28 @@ public class VueloController {
         return ResponseEntity.status(HttpStatus.OK).body(vuelo);
     }
 
+    @GetMapping("/{id}/pasajeros")
+    public ResponseEntity<?> getPasajeros(@PathVariable int id) {
+        return ResponseEntity.status(HttpStatus.OK).body(vueloService.obtenerPasajeros(id));
+    }
+
+    @GetMapping("/{id}/detalles")
+    public ResponseEntity<?> getDetalles(@PathVariable int id) {
+        return ResponseEntity.status(HttpStatus.OK).body(vueloService.obtenerDetallesVuelo(id));
+    }
+
     @PostMapping("/create")
     public ResponseEntity<?> createVuelo(@RequestBody VueloModel vueloModel) {
         VueloModel vuelo = vueloService.registrarVuelo(vueloModel);
+        if (vuelo == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se pudo registrar el vuelo");
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(vuelo);
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<?> saveVuelo(@RequestBody VueloModel vueloModel) {
+        VueloModel vuelo = vueloService.save(vueloModel);
         if (vuelo == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No se pudo registrar el vuelo");
         }

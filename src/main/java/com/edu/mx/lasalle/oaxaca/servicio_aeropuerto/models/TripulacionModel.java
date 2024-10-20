@@ -4,6 +4,8 @@
  */
 package com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models;
 
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

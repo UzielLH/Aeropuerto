@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.BoletoModel;
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.EquipajeModel;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.models.PasajeroModel;
+import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.repositories.EquipajeRepository;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.repositories.PasajeroRepository;
 import com.edu.mx.lasalle.oaxaca.servicio_aeropuerto.service.PasajeroService;
 
@@ -18,9 +20,20 @@ public class PasajeroServiceImplements implements PasajeroService {
     @Autowired
     private PasajeroRepository pasajeroRepository;
 
+    @Autowired
+    private EquipajeRepository equipajeRepository;
+
     @Transactional
     @Override
     public PasajeroModel registrarPasajero(PasajeroModel pasajeroModel) {
+
+        // List<EquipajeModel> equipajes = pasajeroModel.getEquipajes();
+        // if (equipajes != null) {
+        // for (EquipajeModel equipaje : equipajes) {
+        // equipajeRepository.save(equipaje);
+        // }
+        // }
+
         return pasajeroRepository.save(pasajeroModel);
     }
 
